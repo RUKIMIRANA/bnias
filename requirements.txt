@@ -1,0 +1,7 @@
+Django
+django-database-prefix
+dj-database-url
+gunicorn
+Pillow
+psycopg2
+whitenoise

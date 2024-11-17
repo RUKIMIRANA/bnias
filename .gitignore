@@ -1,0 +1,76 @@
+# Byte-compiled / optimized Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Static files
+*.db
+*.sqlite3
+*.log
+
+# Media files
+/media/
+
+# Virtual environment
+venv/
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Secret Key
+*.secret_key
+
+# Local development settings
+local_settings.py
+
+# Ignore database migrations (if not using a separate folder for them)
+/migrations/
+__pycache__
+
+# Ignore configuration files
+.env
+
+# Ignore Docker-specific files (if you're using Docker)
+docker-compose.yml
+*.log
+*.pid
+*.coverage
+
+# Ignore user-specific settings (e.g., PyCharm, VSCode settings)
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Ignore Python package metadata
+__pycache__
+*.egg-info/
+
+# Ignore system files
+.DS_Store
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore the SQLite database file (if using SQLite)
+*.sqlite3
+
+# Ignore poetry lock file
+poetry.lock
+
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
