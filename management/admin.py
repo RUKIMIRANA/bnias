@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .model import (
+from .models import (
     CitizenParent,
     Citizen,
     Colline,

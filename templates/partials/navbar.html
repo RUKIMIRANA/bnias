@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-body-secondary shadow-sm">
+  <div
+    class="{% if user.is_authenticated %}container-fluid{% else %}container{% endif %}"
+  >
+    <a class="navbar-brand" href="{% url 'home' %}">BNIAS</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Businesses</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Post Advert</a>
+        </li>
+        {% else %}
+        <li class="nav-item hide-on-search">
+          <a class="nav-link" href="{% url 'home' %}">Login</a>
+        </li>
+        <li class="nav-item hide-on-search">
+          <a class="nav-link" href="{% url 'home' %}">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" role="search" action="{% url 'home' %}">
+        <input
+          class="form-control search-field mb-2 mb-md-0 me-2"
+          placeholder="Search"
+          aria-label="Search"
+          type="search"
+          value="{{ query }}"
+          required
+          name="q"
+        />
+      </form>
+    </div>
+  </div>
+</nav>
