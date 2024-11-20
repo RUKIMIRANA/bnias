@@ -9,3 +9,13 @@ img {
 .vh-60 {
   height: 60vh !important;
 }
+
+.hero-1 {
+  background-image: url("/static/img/presidence.jpg");
+  background-color: rgba(0, 0, 0, 0.2);
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+}
