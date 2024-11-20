@@ -11,11 +11,11 @@ class CitizenParent(models.Model):
 
 
 class Citizen(models.Model):
-    citizen_id = models.IntegerField()
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     birth_date = models.DateField(auto_now=False, auto_now_add=False)
+    phone_number = models.IntegerField()
     father_name = models.CharField(max_length=50)
     mother_name = models.CharField(max_length=50)
 
@@ -41,7 +41,6 @@ class Province(models.Model):
 
 
 class Publication(models.Model):
-    pub_id = models.IntegerField()
     title = models.CharField(max_length=20)
     files = models.CharField(max_length=50)
     pub_date = models.DateField(auto_now=False, auto_now_add=False)
@@ -65,3 +64,4 @@ class RegisteredIdCardApplication(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=20)
+    requirement = models.TextField()

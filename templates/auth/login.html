@@ -1,0 +1,52 @@
+{% extends 'layouts/base.html' %} {% load static %} {% block content %}
+<main class="container mt-4 pt-4">
+  <div class="row my-1 g-4 justify-content-evenly align-items-center">
+    <div class="col-md-3">
+      <img
+        class="w-100"
+        alt="login image"
+        src="{% static 'img/svg/login.svg' %}"
+      />
+    </div>
+    <div class="col-md-5">
+      {% include 'partials/messages.html' %}
+      <div class="card border-secondary shadow">
+        <div class="card-header text-bg-dark">Login</div>
+        <div class="card-body">
+          <form action="#" method="post">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                required
+                id="email"
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="name@example.com"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                required
+                id="password"
+                name="password"
+                type="password"
+                class="form-control"
+                placeholder="secret"
+              />
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a href="{% url 'register' %}" class="btn btn-link">
+                Create an account
+              </a>
+            </div>
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
