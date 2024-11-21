@@ -1,12 +1,38 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login as login_me_in, logout as log_me_out
+from .models import Service, Publication
 
 
 # Create your views here.
+class ServiceList(ListView):
+    paginate_by = 48
+    queryset = Service.objects.order_by("-id")
+    template_name = "service/index.html"
+
+
+class ServiceDetail(DetailView):
+    model = Service
+    paginate_by = 48
+    template_name = "service/show.html"
+
+
+class PublicationList(ListView):
+    paginate_by = 48
+    queryset = Publication.objects.order_by("-id")
+    template_name = "publication/index.html"
+
+
+class PublicationDetail(DetailView):
+    model = Publication
+    paginate_by = 48
+    template_name = "publication/show.html"
+
+
 @require_http_methods(["GET", "POST"])
 def register(request):
     if request.method == "GET":

@@ -42,7 +42,7 @@ class Province(models.Model):
 
 class Publication(models.Model):
     title = models.CharField(max_length=20)
-    files = models.CharField(max_length=50)
+    files = models.FileField(upload_to="publication/")
     pub_date = models.DateField(auto_now=False, auto_now_add=False)
 
 
