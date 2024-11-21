@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "django_database_prefix",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
