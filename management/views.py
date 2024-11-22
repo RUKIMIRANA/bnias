@@ -34,6 +34,29 @@ class PublicationDetail(DetailView):
 
 
 @require_http_methods(["GET", "POST"])
+def apply(request):
+    if request.method == "GET":
+        return render(request, "apply.html")
+
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+
+        try:
+            user = User.objects.get(email=email)
+            user = authenticate(username=user.username, password=password)
+        except User.DoesNotExist:
+            user = None
+
+        if user is None:
+            messages.info(request, "Invalid credentials")
+            return redirect("login")
+
+        login_me_in(request, user)
+        return redirect("home")
+
+
+@require_http_methods(["GET", "POST"])
 def register(request):
     if request.method == "GET":
         return render(request, "auth/register.html")

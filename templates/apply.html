@@ -1,0 +1,131 @@
+{% extends 'layouts/base.html' %} {% load static %} {% block content %}
+<main class="container mt-4 pt-4">
+  <div class="row my-1 g-4 justify-content-evenly align-items-center">
+    <div class="col-md-7">
+      {% include 'partials/messages.html' %}
+      <div class="card border-secondary shadow">
+        <div class="card-header text-bg-dark">Apply for a National ID</div>
+        <div class="card-body">
+          <form action="#" method="post" class="row g-3">
+            <div class="col-md-6">
+              <label for="firstname" class="form-label"> First name </label>
+              <input
+                required
+                type="text"
+                id="firstname"
+                name="firstname"
+                class="form-control"
+                placeholder="mr/s"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="lastname" class="form-label"> Last name </label>
+              <input
+                required
+                type="text"
+                id="lastname"
+                name="lastname"
+                class="form-control"
+                placeholder="person"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="gender" class="form-label"> Gender </label>
+              <select required name="gender" class="form-select">
+                <option value="">-- select gender --</option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="birthdate" class="form-label"> Date of birth </label>
+              <input
+                required
+                type="date"
+                id="birthdate"
+                name="birthdate"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="phone" class="form-label"> Phone number </label>
+              <input
+                required
+                type="text"
+                id="phone"
+                name="phone"
+                class="form-control"
+                placeholder="738035904905"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label"> Email address </label>
+              <input
+                required
+                id="email"
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="name@example.com"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="residence" class="form-label"> Residence </label>
+              <input
+                required
+                type="text"
+                id="residence"
+                name="residence"
+                class="form-control"
+                placeholder="bujumbura"
+              />
+            </div>
+            <div class="col-12">
+              <label for="picture" class="form-label"> Passport picture </label>
+              <input
+                required
+                type="file"
+                id="picture"
+                name="picture"
+                data-max-files="1"
+                data-max-file-size="4MB"
+                class="form-control filepond"
+              />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %} {% block styles %}
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link
+  href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
+  rel="stylesheet"
+/>
+{% endblock %} {% block scripts %}
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script>
+  FilePond.registerPlugin(
+    FilePondPluginImagePreview,
+    FilePondPluginImageExifOrientation,
+    FilePondPluginFileValidateSize,
+    FilePondPluginImageEdit
+  );
+
+  FilePond.create(document.getElementById("picture"), { storeAsFile: true });
+</script>
+{% endblock %}

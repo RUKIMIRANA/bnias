@@ -15,4 +15,6 @@ urlpatterns = [
     path("service/<int:pk>", views.ServiceDetail.as_view(), name="service"),
     path("publication", views.PublicationList.as_view(), name="publications"),
     path("publication/<int:pk>", views.PublicationDetail.as_view(), name="publication"),
+    # application
+    path("apply", views.apply, name="apply"),
 ]
