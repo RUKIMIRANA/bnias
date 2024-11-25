@@ -46,7 +46,9 @@ class Colline(models.Model):
     commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.commune.name + " -> " + self.name
+        return (
+            self.commune.province.name + " -> " + self.commune.name + " -> " + self.name
+        )
 
 
 class IdCardRegistration(models.Model):
