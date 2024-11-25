@@ -69,16 +69,32 @@
                 placeholder="name@example.com"
               />
             </div>
-            <div class="col-md-6">
-              <label for="residence" class="form-label"> Residence </label>
-              <input
-                required
-                type="text"
-                id="residence"
-                name="residence"
-                class="form-control"
-                placeholder="bujumbura"
-              />
+            <div class="col-md-4">
+              <label for="province" class="form-label"> Province </label>
+              <select class="form-select">
+                <option value="">-- select province --</option>
+                {% for item in provinces %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="commune" class="form-label"> Commune </label>
+              <select class="form-select">
+                <option value="">-- select commune --</option>
+                {% for item in communes %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="colline" class="form-label"> Colline </label>
+              <select class="form-select">
+                <option value="">-- select colline --</option>
+                {% for item in collines %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
             </div>
             <div class="col-12">
               <label for="picture" class="form-label"> Passport picture </label>

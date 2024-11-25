@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login as login_me_in, logout as log_me_out
-from .models import Service, Publication
+from .models import Service, Publication, Province, Colline, Commune
 
 
 # Create your views here.
@@ -42,7 +42,14 @@ def dashboard(request):
 @require_http_methods(["GET", "POST"])
 def apply(request):
     if request.method == "GET":
-        return render(request, "apply.html")
+        communes = Commune.objects.all()
+        collines = Colline.objects.all()
+        provinces = Province.objects.all()
+        return render(
+            request,
+            "apply.html",
+            {"provinces": provinces, "collines": collines, "communes": communes},
+        )
 
     if request.method == "POST":
         email = request.POST["email"]
