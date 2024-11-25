@@ -2,17 +2,6 @@ from django.db import models
 
 
 # Create your models here.
-class CitizenParent(models.Model):
-    citizen_id = models.IntegerField()
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    gender = models.CharField(max_length=10)
-    birth_date = models.DateField(auto_now=False, auto_now_add=False)
-
-    def __str__(self):
-        return self.first_name + " " + self.last_name
-
-
 class Citizen(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -21,6 +10,12 @@ class Citizen(models.Model):
     phone_number = models.IntegerField()
     father_name = models.CharField(max_length=50)
     mother_name = models.CharField(max_length=50)
+    mother = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, related_name="child_of_mother"
+    )
+    father = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, related_name="child_of_father"
+    )
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -51,12 +46,9 @@ class Colline(models.Model):
         )
 
 
-class IdCardRegistration(models.Model):
-    citizen_id = models.IntegerField()
-
-
 class LostIdCardReport(models.Model):
     citizen_id = models.IntegerField()
+    report = models.TextField(null=True)
 
 
 class Publication(models.Model):
