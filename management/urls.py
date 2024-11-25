@@ -17,4 +17,6 @@ urlpatterns = [
     path("publication/<int:pk>", views.PublicationDetail.as_view(), name="publication"),
     # application
     path("apply", views.apply, name="apply"),
+    # dashboard
+    path("dashboard", views.dashboard, name="dashboard"),
 ]

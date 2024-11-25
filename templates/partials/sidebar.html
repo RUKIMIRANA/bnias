@@ -1,0 +1,149 @@
+{% load static %}
+<div
+  class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+  style="width: 15em"
+>
+  <a
+    href="/"
+    class="d-flex align-items-center mb-3 pb-2 mb-md-0 me-md-auto text-white text-decoration-none"
+  >
+    <img
+      class="me-2 rounded"
+      alt="logo"
+      src="{% static 'img/seal.jpg' %}"
+      height="32"
+      width="32"
+    />
+    <span class="fs-5">BNIA</span>
+  </a>
+  <ul class="nav nav-pills d-block flex-column mb-auto scrollarea no-scrollbar">
+    <li>
+      <a href="/" class="nav-link text-white">
+        <i class="bi bi-house me-2"></i> Home
+      </a>
+    </li>
+    <li class="{% if 'dashboard' in request.path %} nav-item {% endif %}">
+      <a
+        href="/dashboard"
+        class="nav-link {% if 'dashboard' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <hr />
+    </li>
+    <li class="{% if 'citizen' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'citizen' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-stars me-2"></i> Citizen
+      </a>
+    </li>
+    <li class="{% if 'application' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'application' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-stars me-2"></i> NID Card Applicant
+      </a>
+    </li>
+    <li class="{% if 'lost' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'lost' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-stars me-2"></i> Lost Card Report
+      </a>
+    </li>
+    <li>
+      <hr />
+    </li>
+    <li class="{% if 'service' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'service' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-intersect me-2"></i> Services
+      </a>
+    </li>
+    <li class="{% if 'publication' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'publication' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-intersect me-2"></i> Publications
+      </a>
+    </li>
+    <li>
+      <hr />
+    </li>
+    <li class="{% if 'province' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'province' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-building me-2"></i> Province
+      </a>
+    </li>
+    <li class="{% if 'commune' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'commune' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-stars me-2"></i> Commune
+      </a>
+    </li>
+    <li class="{% if 'colline' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'colline' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-file-text me-2"></i> Colline
+      </a>
+    </li>
+    <li>
+      <hr />
+    </li>
+    {% if user.is_authenticated and user.is_admin %}
+    <li class="{% if 'user' in request.path %} nav-item {% endif %}">
+      <a
+        href="/dashboard"
+        class="nav-link {% if 'user' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-people me-2"></i> User
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+  <div class="dropdown pt-2">
+    <a
+      href="#"
+      class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+      id="dropdownUser1"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <img
+        src="{% static 'img/user.png' %}"
+        alt="{{ user.username }}"
+        width="32"
+        height="32"
+        class="rounded-circle me-2"
+      />
+      <strong class="text-truncate">{{ user.username }}</strong>
+    </a>
+    <ul
+      class="dropdown-menu dropdown-menu-dark text-small shadow"
+      aria-labelledby="dropdownUser1"
+    >
+      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+      <li>
+        <hr />
+      </li>
+      <li><a class="dropdown-item" href="/dashboard">Settings</a></li>
+      <li><a class="dropdown-item" href="/dashboard">Profile</a></li>
+    </ul>
+  </div>
+</div>

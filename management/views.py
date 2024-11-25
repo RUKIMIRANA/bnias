@@ -33,6 +33,12 @@ class PublicationDetail(DetailView):
     template_name = "publication/show.html"
 
 
+@login_required(login_url="/login")
+@require_http_methods(["GET"])
+def dashboard(request):
+    return render(request, "dashboard/index.html")
+
+
 @require_http_methods(["GET", "POST"])
 def apply(request):
     if request.method == "GET":
