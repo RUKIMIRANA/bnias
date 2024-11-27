@@ -198,7 +198,7 @@ def lost(request):
             lost.save()
             messages.info(
                 request,
-                "Thank you for reporting your the lost ID card, we'll be in touch soon",
+                "Thank you for reporting the lost ID card, we'll be in touch soon",
             )
 
         return redirect("lost")
