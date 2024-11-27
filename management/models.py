@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # Create your models here.
@@ -23,9 +26,7 @@ class Citizen(models.Model):
 
 class Province(models.Model):
     name = models.CharField(max_length=30)
-    head = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, related_name="head_of_province"
-    )
+    head = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
@@ -34,9 +35,7 @@ class Province(models.Model):
 class Commune(models.Model):
     name = models.CharField(max_length=30)
     province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True)
-    chief = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, related_name="chief_of_commune"
-    )
+    chief = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.province.name + " -> " + self.name
@@ -45,9 +44,7 @@ class Commune(models.Model):
 class Colline(models.Model):
     name = models.CharField(max_length=30)
     commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
-    chief = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, related_name="chief_of_colline"
-    )
+    chief = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return (
