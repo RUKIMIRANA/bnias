@@ -12,6 +12,7 @@ from .models import (
     Province,
     Colline,
     Commune,
+    LostIdCardReport,
     RegisteredIdCardApplication,
 )
 
@@ -45,56 +46,6 @@ class PublicationDetail(DetailView):
 @require_http_methods(["GET"])
 def dashboard(request):
     return render(request, "dashboard/index.html")
-
-
-@require_http_methods(["GET", "POST"])
-def apply(request):
-    if request.method == "GET":
-        communes = Commune.objects.all()
-        collines = Colline.objects.all()
-        provinces = Province.objects.all()
-        return render(
-            request,
-            "apply.html",
-            {"provinces": provinces, "collines": collines, "communes": communes},
-        )
-
-    if request.method == "POST":
-        first_name = request.POST["firstname"]
-        last_name = request.POST["lastname"]
-        gender = request.POST["gender"]
-        birth_date = request.POST["birthdate"]
-        phone = request.POST["phone"]
-        email = request.POST["email"]
-        province = request.POST["province"]
-        commune = request.POST["commune"]
-        colline = request.POST["colline"]
-
-        if RegisteredIdCardApplication.objects.filter(
-            Q(email=email) | Q(phone=phone)
-        ).exists():
-            messages.info(request, "Application already sent")
-
-        else:
-            applicant = RegisteredIdCardApplication(
-                first_name=first_name,
-                last_name=last_name,
-                gender=gender,
-                birth_date=birth_date,
-                phone=phone[:10],
-                email=email,
-                province_id=province,
-                commune_id=commune,
-                colline_id=colline,
-            )
-
-            if request.FILES.get("picture") is not None:
-                applicant.image = request.FILES.get("applicant")
-
-            applicant.save()
-            messages.info(request, "Thank you for applying, we'll be in touch soon")
-
-        return redirect("apply")
 
 
 @require_http_methods(["GET", "POST"])
@@ -158,3 +109,96 @@ def login(request):
 def logout(request):
     log_me_out(request)
     return redirect("home")
+
+
+@require_http_methods(["GET", "POST"])
+def apply(request):
+    if request.method == "GET":
+        communes = Commune.objects.all()
+        collines = Colline.objects.all()
+        provinces = Province.objects.all()
+        return render(
+            request,
+            "apply.html",
+            {"provinces": provinces, "collines": collines, "communes": communes},
+        )
+
+    if request.method == "POST":
+        first_name = request.POST["firstname"]
+        last_name = request.POST["lastname"]
+        gender = request.POST["gender"]
+        birth_date = request.POST["birthdate"]
+        phone = request.POST["phone"]
+        email = request.POST["email"]
+        province = request.POST["province"]
+        commune = request.POST["commune"]
+        colline = request.POST["colline"]
+
+        if RegisteredIdCardApplication.objects.filter(
+            Q(email=email) | Q(phone=phone)
+        ).exists():
+            messages.info(request, "Application already sent")
+
+        else:
+            applicant = RegisteredIdCardApplication(
+                first_name=first_name,
+                last_name=last_name,
+                gender=gender,
+                birth_date=birth_date,
+                phone=phone[:10],
+                email=email,
+                province_id=province,
+                commune_id=commune,
+                colline_id=colline,
+            )
+
+            if request.FILES.get("picture") is not None:
+                applicant.image = request.FILES.get("applicant")
+
+            applicant.save()
+            messages.info(request, "Thank you for applying, we'll be in touch soon")
+
+        return redirect("apply")
+
+
+@login_required(login_url="/login")
+@require_http_methods(["GET", "POST"])
+def lost(request):
+    if request.method == "GET":
+        communes = Commune.objects.all()
+        collines = Colline.objects.all()
+        provinces = Province.objects.all()
+        return render(
+            request,
+            "dashboard/lost.html",
+            {"provinces": provinces, "collines": collines, "communes": communes},
+        )
+
+    if request.method == "POST":
+        card_id = request.POST["nid"]
+        date = request.POST["date"]
+        report = request.POST["report"]
+        province = request.POST["province"]
+        commune = request.POST["commune"]
+        colline = request.POST["colline"]
+
+        if LostIdCardReport.objects.filter(Q(card_id=card_id) | Q(date=date)).exists():
+            messages.info(request, "Lost report already sent")
+
+        else:
+            lost = LostIdCardReport(
+                card_id=card_id,
+                date=date,
+                report=report,
+                province_id=province,
+                commune_id=commune,
+                colline_id=colline,
+            )
+
+            lost.save()
+            messages.info(
+                request,
+                "Thank you for reporting your the lost ID card, we'll be in touch soon",
+            )
+
+        return redirect("lost")

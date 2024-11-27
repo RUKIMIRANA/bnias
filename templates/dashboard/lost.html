@@ -1,0 +1,112 @@
+{% extends 'layouts/dashboard.html' %} {% load static %} {% block content %}
+  <div class="row my-1 g-4 justify-content-evenly align-items-center">
+    <div class="col-md-8">
+      {% include 'partials/messages.html' %}
+      <div class="card border-secondary shadow">
+        <div class="card-header text-bg-dark">Report lost National ID</div>
+        <div class="card-body">
+          <form action="#" method="post" class="row g-3">
+            <div class="col-md-6">
+              <label for="nid" class="form-label"> National ID Number </label>
+              <input
+                required
+                type="text"
+                id="nid"
+                name="nid"
+                class="form-control"
+                placeholder="National ID #"
+              />
+            </div> 
+            <div class="col-md-6">
+              <label for="date" class="form-label"> Date the ID got lost </label>
+              <input
+                required
+                type="date"
+                id="date"
+                name="date"
+                class="form-control"
+              />
+            </div>  
+            <div class="col-md-4">
+              <label for="province" class="form-label"> Province </label>
+              <select class="form-select" name="province">
+                <option value="">-- select province --</option>
+                {% for item in provinces %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="commune" class="form-label"> Commune </label>
+              <select class="form-select" name="commune">
+                <option value="">-- select commune --</option>
+                {% for item in communes %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="colline" class="form-label"> Colline </label>
+              <select class="form-select" name="colline">
+                <option value="">-- select colline --</option>
+                {% for item in collines %}
+                <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div> 
+            <div class="col-12">
+              <label for="report" class="form-label"> Report </label>
+              <textarea required id="report" name="report" class="form-control"></textarea>
+            </div>  
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+    </div>
+</main>
+{% endblock %} {% block styles %}
+<link href="{% static 'vendor/summernote/summernote-bs5.min.css' %}" rel="stylesheet">
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link
+  href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
+  rel="stylesheet"
+/>
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/summernote/summernote-bs5.min.js' %}"></script>
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script>
+
+    $(document).ready(function() {
+        $('#report').summernote({
+          placeholder: "write a detailed report on how the national ID got lost",
+          height: 150
+        })
+      })
+      
+  FilePond.registerPlugin(
+    FilePondPluginImagePreview,
+    FilePondPluginImageExifOrientation,
+    FilePondPluginFileValidateSize,
+    FilePondPluginFileValidateType,
+    FilePondPluginImageEdit
+  );
+
+  FilePond.create(document.getElementById("picture"), {
+    storeAsFile: true,
+    acceptedFileTypes: ["image/*"],
+  });
+</script>
+{% endblock %}

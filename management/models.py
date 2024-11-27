@@ -1,7 +1,12 @@
+import random
 from django.db import models
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+
+def generate_random_card_id():
+    return random.randint(10000000, 99999999)
 
 
 # Create your models here.
@@ -54,6 +59,7 @@ class Colline(models.Model):
 
 
 class LostIdCardReport(models.Model):
+    card_id = models.IntegerField(null=True)
     report = models.TextField(null=True)
     date = models.DateField(auto_now=True)
     citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE, null=True)
@@ -87,6 +93,7 @@ class RegisteredIdCardApplication(models.Model):
 
 
 class RegisteredIdCard(models.Model):
+    card_id = models.IntegerField(default=generate_random_card_id)
     citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE, null=True)
     applicant = models.ForeignKey(
         RegisteredIdCardApplication, on_delete=models.CASCADE, null=True

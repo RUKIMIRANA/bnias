@@ -7,7 +7,7 @@ Burundian National Identity Application
 - [ ] citizen
 
   - [x] apply for id card
-  - [ ] report lost card
+  - [x] report lost card
 
 - [ ] admin
   - [ ] approve or deny application
