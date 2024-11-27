@@ -33,6 +33,7 @@
     <li>
       <hr />
     </li>
+    {% if user.is_staff %}
     <li class="{% if 'citizen' in request.path %} nav-item {% endif %}">
       <a
         href="/"
@@ -49,6 +50,16 @@
         <i class="bi bi-stars me-2"></i> NID Card Applicant
       </a>
     </li>
+    {% else %}
+    <li class="{% if 'application' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'application' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-stars me-2"></i> My NID Card
+      </a>
+    </li>
+    {% endif %}
     <li class="{% if 'lost' in request.path %} nav-item {% endif %}">
       <a
         href="/lost"
@@ -62,7 +73,7 @@
     </li>
     <li class="{% if 'service' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/service"
         class="nav-link {% if 'service' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-intersect me-2"></i> Services
@@ -70,12 +81,13 @@
     </li>
     <li class="{% if 'publication' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/publication"
         class="nav-link {% if 'publication' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-intersect me-2"></i> Publications
       </a>
     </li>
+    {% if user.is_staff %}
     <li>
       <hr />
     </li>
@@ -103,8 +115,25 @@
         <i class="bi bi-file-text me-2"></i> Colline
       </a>
     </li>
+    {% endif %}
     <li>
       <hr />
+    </li>
+    <li class="{% if 'message' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'message' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-envelope me-2"></i> Message
+      </a>
+    </li>
+    <li class="{% if 'notification' in request.path %} nav-item {% endif %}">
+      <a
+        href="/"
+        class="nav-link {% if 'notification' in request.path %} active {% else %} text-white {% endif %}"
+      >
+        <i class="bi bi-bell me-2"></i> Notification
+      </a>
     </li>
     {% if user.is_authenticated and user.is_admin %}
     <li class="{% if 'user' in request.path %} nav-item {% endif %}">
