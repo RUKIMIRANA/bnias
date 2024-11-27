@@ -71,7 +71,7 @@
             </div>
             <div class="col-md-4">
               <label for="province" class="form-label"> Province </label>
-              <select class="form-select">
+              <select class="form-select" name="province">
                 <option value="">-- select province --</option>
                 {% for item in provinces %}
                 <option value="{{ item.id }}">{{ item.name }}</option>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-4">
               <label for="commune" class="form-label"> Commune </label>
-              <select class="form-select">
+              <select class="form-select" name="commune">
                 <option value="">-- select commune --</option>
                 {% for item in communes %}
                 <option value="{{ item.id }}">{{ item.name }}</option>
@@ -89,7 +89,7 @@
             </div>
             <div class="col-md-4">
               <label for="colline" class="form-label"> Colline </label>
-              <select class="form-select">
+              <select class="form-select" name="colline">
                 <option value="">-- select colline --</option>
                 {% for item in collines %}
                 <option value="{{ item.id }}">{{ item.name }}</option>
@@ -132,6 +132,7 @@
 {% endblock %} {% block scripts %}
 <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
@@ -140,9 +141,13 @@
     FilePondPluginImagePreview,
     FilePondPluginImageExifOrientation,
     FilePondPluginFileValidateSize,
+    FilePondPluginFileValidateType,
     FilePondPluginImageEdit
   );
 
-  FilePond.create(document.getElementById("picture"), { storeAsFile: true });
+  FilePond.create(document.getElementById("picture"), {
+    storeAsFile: true,
+    acceptedFileTypes: ["image/*"],
+  });
 </script>
 {% endblock %}

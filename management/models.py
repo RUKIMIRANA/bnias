@@ -10,9 +10,10 @@ class Citizen(models.Model):
     last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     birth_date = models.DateField(auto_now=False, auto_now_add=False)
-    phone_number = models.IntegerField()
+    phone = models.IntegerField()
     father_name = models.CharField(max_length=50)
     mother_name = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     mother = models.ForeignKey(
         "self", on_delete=models.CASCADE, null=True, related_name="child_of_mother"
     )
@@ -53,8 +54,12 @@ class Colline(models.Model):
 
 
 class LostIdCardReport(models.Model):
-    citizen_id = models.IntegerField()
     report = models.TextField(null=True)
+    date = models.DateField(auto_now=True)
+    citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE, null=True)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True)
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
+    colline = models.ForeignKey(Colline, on_delete=models.CASCADE, null=True)
 
 
 class Publication(models.Model):
@@ -63,24 +68,29 @@ class Publication(models.Model):
     pub_date = models.DateField(auto_now=False, auto_now_add=False)
 
 
-class RegisteredIdCard(models.Model):
-    citizen_id = models.IntegerField()
-
-
 class RegisteredIdCardApplication(models.Model):
-    citizen_id = models.IntegerField()
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     birth_date = models.DateField(auto_now=False, auto_now_add=False)
     email = models.CharField(max_length=50)
-    phone_number = models.IntegerField()
+    phone = models.IntegerField()
     picture = models.ImageField(upload_to="applicants/")
     residence = models.CharField(max_length=50)
     is_approved = models.BooleanField(default=False)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True)
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True)
+    colline = models.ForeignKey(Colline, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
+
+
+class RegisteredIdCard(models.Model):
+    citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE, null=True)
+    applicant = models.ForeignKey(
+        RegisteredIdCardApplication, on_delete=models.CASCADE, null=True
+    )
 
 
 class Service(models.Model):

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -5,7 +6,14 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login as login_me_in, logout as log_me_out
-from .models import Service, Publication, Province, Colline, Commune
+from .models import (
+    Service,
+    Publication,
+    Province,
+    Colline,
+    Commune,
+    RegisteredIdCardApplication,
+)
 
 
 # Create your views here.
@@ -52,21 +60,41 @@ def apply(request):
         )
 
     if request.method == "POST":
+        first_name = request.POST["firstname"]
+        last_name = request.POST["lastname"]
+        gender = request.POST["gender"]
+        birth_date = request.POST["birthdate"]
+        phone = request.POST["phone"]
         email = request.POST["email"]
-        password = request.POST["password"]
+        province = request.POST["province"]
+        commune = request.POST["commune"]
+        colline = request.POST["colline"]
 
-        try:
-            user = User.objects.get(email=email)
-            user = authenticate(username=user.username, password=password)
-        except User.DoesNotExist:
-            user = None
+        if RegisteredIdCardApplication.objects.filter(
+            Q(email=email) | Q(phone=phone)
+        ).exists():
+            messages.info(request, "Application already sent")
 
-        if user is None:
-            messages.info(request, "Invalid credentials")
-            return redirect("login")
+        else:
+            applicant = RegisteredIdCardApplication(
+                first_name=first_name,
+                last_name=last_name,
+                gender=gender,
+                birth_date=birth_date,
+                phone=phone[:10],
+                email=email,
+                province_id=province,
+                commune_id=commune,
+                colline_id=colline,
+            )
 
-        login_me_in(request, user)
-        return redirect("home")
+            if request.FILES.get("picture") is not None:
+                applicant.image = request.FILES.get("applicant")
+
+            applicant.save()
+            messages.info(request, "Thank you for applying, we'll be in touch soon")
+
+        return redirect("apply")
 
 
 @require_http_methods(["GET", "POST"])
