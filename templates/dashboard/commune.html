@@ -1,0 +1,76 @@
+{% extends 'layouts/dashboard.html' %} {% load static %} {% block content %}
+<h4>All Communes</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'commune' %}">Commune</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">All Communes</li>
+  </ol>
+</nav>
+{% include 'partials/messages.html' %}
+<table class="table table-bordered table-hover mt-3">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Commune</th>
+      <th scope="col">Chief</th>
+      <th scope="col">Province</th>
+      <th scope="col" style="width: 10rem">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in page_object %}
+    <tr>
+      <td>{{row.name}}</td>
+      <td>{{row.chief}}</td>
+      <td>{{row.province.name}}</td>
+      <td>
+        <div class="btn-group">
+          <a href="#" class="btn btn-sm btn-info"> Edit </a>
+          <a href="#" class="btn btn-sm btn-warning"> Delete </a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<nav aria-label="pagination">
+  <ul class="pagination justify-content-center">
+    {% if page_object.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_object.previous_page_number }}">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    </li>
+    {% endif %}
+    <li class="page-item">
+      <a class="page-link" href="#">
+        {{ page_object.number }} / {{ page_object.paginator.num_pages }}
+      </a>
+    </li>
+    {% if page_object.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_object.next_page_number }}">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %} {% block scripts %}
+<style>
+  html,
+  body {
+    background: whitesmoke !important;
+  }
+</style>
+<script>
+  function deleteActivity(url = "") {
+    if (confirm("You are about to delete this activity")) window.location = url;
+  }
+</script>
+{% endblock %}

@@ -1,20 +1,25 @@
+from .models import (
+    Chat,
+    Colline,
+    Commune,
+    Citizen,
+    Service,
+    Province,
+    Publication,
+    Notification,
+    RegisteredIdCard,
+    LostIdCardReport,
+    RegisteredIdCardApplication,
+)
 from django.db.models import Q
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login as login_me_in, logout as log_me_out
-from .models import (
-    Service,
-    Publication,
-    Province,
-    Colline,
-    Commune,
-    LostIdCardReport,
-    RegisteredIdCardApplication,
-)
 
 
 # Create your views here.
@@ -202,3 +207,91 @@ def lost(request):
             )
 
         return redirect("lost")
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def citizen(request):
+    rows = Citizen.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/citizen.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def colline(request):
+    rows = Colline.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/colline.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def card(request):
+    rows = RegisteredIdCard.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/card.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def commune(request):
+    rows = Commune.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/commune.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def province(request):
+    rows = Province.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/province.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def applicant(request):
+    rows = RegisteredIdCardApplication.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/applicant.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def message(request):
+    rows = Chat.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/message.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def notification(request):
+    rows = Notification.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/notification.html", {"page_object": page_object})

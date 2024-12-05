@@ -27,7 +27,7 @@ class Citizen(models.Model):
     )
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return f"{self.first_name} {self.last_name}"
 
 
 class Province(models.Model):
@@ -44,7 +44,7 @@ class Commune(models.Model):
     chief = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.province.name + " -> " + self.name
+        return f"{self.province.name} -> {self.name}"
 
 
 class Colline(models.Model):
@@ -53,9 +53,7 @@ class Colline(models.Model):
     chief = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return (
-            self.commune.province.name + " -> " + self.commune.name + " -> " + self.name
-        )
+        return f"{self.commune.province.name} -> {self.commune.name} -> {self.name}"
 
 
 class LostIdCardReport(models.Model):
@@ -89,7 +87,7 @@ class RegisteredIdCardApplication(models.Model):
     colline = models.ForeignKey(Colline, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return f"{self.first_name} {self.last_name}"
 
 
 class RegisteredIdCard(models.Model):
@@ -106,3 +104,36 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Chat(models.Model):
+    message = models.TextField(null=False)
+    is_active = models.BooleanField(default=True)
+    uid = models.CharField(max_length=255, blank=True)
+    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(
+        User, related_name="receiver", on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.sender.id < self.receiver.id:
+            self.uid = f"{self.sender.id}-{self.receiver.id}"
+        else:
+            self.uid = f"{self.receiver.id}-{self.sender.id}"
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.sender.username} -> {self.receiver.username}: {self.message}"
+
+
+class Notification(models.Model):
+    message = models.TextField()
+    url = models.CharField(max_length=255, default="#")
+    is_seen = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} -> {self.message}"

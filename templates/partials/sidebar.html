@@ -36,25 +36,25 @@
     {% if user.is_staff %}
     <li class="{% if 'citizen' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/citizen"
         class="nav-link {% if 'citizen' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-people me-2"></i> Citizen
       </a>
     </li>
-    <li class="{% if 'application' in request.path %} nav-item {% endif %}">
+    <li class="{% if 'applicant' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
-        class="nav-link {% if 'application' in request.path %} active {% else %} text-white {% endif %}"
+        href="/applicant"
+        class="nav-link {% if 'applicant' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-stars me-2"></i> NID Card Applicant
       </a>
     </li>
     {% else %}
-    <li class="{% if 'application' in request.path %} nav-item {% endif %}">
+    <li class="{% if 'card' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
-        class="nav-link {% if 'application' in request.path %} active {% else %} text-white {% endif %}"
+        href="/card"
+        class="nav-link {% if 'card' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-stars me-2"></i> My NID Card
       </a>
@@ -93,7 +93,7 @@
     </li>
     <li class="{% if 'province' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/province"
         class="nav-link {% if 'province' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-building me-2"></i> Province
@@ -101,7 +101,7 @@
     </li>
     <li class="{% if 'commune' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/commune"
         class="nav-link {% if 'commune' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-stars me-2"></i> Commune
@@ -109,7 +109,7 @@
     </li>
     <li class="{% if 'colline' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/colline"
         class="nav-link {% if 'colline' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-file-text me-2"></i> Colline
@@ -121,7 +121,7 @@
     </li>
     <li class="{% if 'message' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/message"
         class="nav-link {% if 'message' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-envelope me-2"></i> Message
@@ -129,7 +129,7 @@
     </li>
     <li class="{% if 'notification' in request.path %} nav-item {% endif %}">
       <a
-        href="/"
+        href="/notification"
         class="nav-link {% if 'notification' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-bell me-2"></i> Notification
