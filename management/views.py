@@ -47,7 +47,7 @@ class PublicationDetail(DetailView):
 
 
 @login_required(login_url="/login")
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 def dashboard(request):
     return render(request, "dashboard/index.html")
 
@@ -83,7 +83,7 @@ def register(request):
         user_login = authenticate(username=username, password=password)
         login_me_in(request, user_login)
 
-        return redirect("home")
+        return redirect("dashboard")
 
 
 @require_http_methods(["GET", "POST"])
@@ -106,7 +106,7 @@ def login(request):
             return redirect("login")
 
         login_me_in(request, user)
-        return redirect("home")
+        return redirect("dashboard")
 
 
 @login_required(login_url="login")
@@ -223,6 +223,8 @@ def deny(request):
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
 def my_card(request):
+    # citizen = Citizen.objects.get(user=request.user)
+    # card = citizen.card if citizen.card else "No card available"
     return render(request, "dashboard/my-card.html")
 
 
