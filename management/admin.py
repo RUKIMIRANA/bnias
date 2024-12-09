@@ -9,7 +9,6 @@ from .models import (
     RegisteredIdCard,
     RegisteredIdCardApplication,
     Service,
-    Chat,
     Notification,
 )
 
@@ -23,5 +22,4 @@ admin.site.register(Publication)
 admin.site.register(RegisteredIdCard)
 admin.site.register(RegisteredIdCardApplication)
 admin.site.register(Service)
-admin.site.register(Chat)
 admin.site.register(Notification)

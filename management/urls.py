@@ -24,7 +24,6 @@ urlpatterns = [
     path("province", views.province, name="province"),
     path("commune", views.commune, name="commune"),
     path("colline", views.colline, name="colline"),
-    path("message", views.message, name="message"),
     path("notification", views.notification, name="notification"),
     # dashboard
     path("dashboard", views.dashboard, name="dashboard"),

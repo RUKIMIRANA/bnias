@@ -106,28 +106,6 @@ class Service(models.Model):
         return self.name
 
 
-class Chat(models.Model):
-    message = models.TextField(null=False)
-    is_active = models.BooleanField(default=True)
-    uid = models.CharField(max_length=255, blank=True)
-    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
-    receiver = models.ForeignKey(
-        User, related_name="receiver", on_delete=models.CASCADE
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def save(self, *args, **kwargs):
-        if self.sender.id < self.receiver.id:
-            self.uid = f"{self.sender.id}-{self.receiver.id}"
-        else:
-            self.uid = f"{self.receiver.id}-{self.sender.id}"
-
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.sender.username} -> {self.receiver.username}: {self.message}"
-
-
 class Notification(models.Model):
     message = models.TextField()
     url = models.CharField(max_length=255, default="#")

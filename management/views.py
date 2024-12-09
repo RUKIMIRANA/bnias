@@ -1,5 +1,4 @@
 from .models import (
-    Chat,
     Colline,
     Commune,
     Citizen,
@@ -273,17 +272,6 @@ def applicant(request):
     page_object = paginator.get_page(page_number)
 
     return render(request, "dashboard/applicant.html", {"page_object": page_object})
-
-
-@require_http_methods(["GET"])
-@login_required(login_url="/login")
-def message(request):
-    rows = Chat.objects.order_by("-id")
-    paginator = Paginator(rows, 12)
-    page_number = request.GET.get("page")
-    page_object = paginator.get_page(page_number)
-
-    return render(request, "dashboard/message.html", {"page_object": page_object})
 
 
 @require_http_methods(["GET"])
