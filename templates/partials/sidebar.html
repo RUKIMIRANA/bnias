@@ -65,9 +65,14 @@
       </a>
     </li>
     {% else %}
+    <li class="">
+      <a href="/apply" target="_blank" class="nav-link text-white">
+        <i class="bi bi-stars me-2"></i> Apply for NID Card
+      </a>
+    </li>
     <li class="{% if 'card' in request.path %} nav-item {% endif %}">
       <a
-        href="/card"
+        href="/my-card"
         class="nav-link {% if 'card' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-stars me-2"></i> My NID Card

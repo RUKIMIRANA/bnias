@@ -222,6 +222,12 @@ def deny(request):
 
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
+def my_card(request):
+    return render(request, "dashboard/my-card.html")
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
 def citizen(request):
     rows = Citizen.objects.order_by("-id")
     paginator = Paginator(rows, 12)

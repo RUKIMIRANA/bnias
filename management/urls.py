@@ -26,6 +26,7 @@ urlpatterns = [
     path("province", views.province, name="province"),
     path("commune", views.commune, name="commune"),
     path("colline", views.colline, name="colline"),
+    path("my-card", views.my_card, name="my-card"),
     path("lost-cards", views.lost_cards, name="lost-cards"),
     path("notification", views.notification, name="notification"),
     # dashboard

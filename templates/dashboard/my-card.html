@@ -1,0 +1,64 @@
+{% extends 'layouts/dashboard.html' %} {% load static %} {% block content %}
+<div class="row my-1 g-4 justify-content-evenly align-items-center">
+  <div class="col-md-6">
+    {% include 'partials/messages.html' %}
+    <div class="card border-secondary shadow">
+      <div class="card-body">
+        <div class="d-flex justify-content-between mb-4">
+          <img
+            alt="logo"
+            src="{% static 'img/seal.jpg' %}"
+            height="65"
+            width="65"
+          />
+          <div class="fw-bolder text-uppercase">
+            <h4>Republique du Burundi</h4>
+            <h5>Carte d'identite, Identity Card</h5>
+          </div>
+          <img
+            alt="logo"
+            src="{% static 'img/flag.png' %}"
+            height="65"
+            width="90"
+          />
+        </div>
+        <div class="d-flex m-3">
+          <img
+            class="me-4"
+            alt="user"
+            src="{% static 'img/phone-call.jpg' %}"
+            height="240"
+            width="200"
+          />
+          <div class="d-flex flex-column w-100 gap-3">
+            <div class="">
+              <span>Amazina / Names</span>
+              <b class="float-end">Mr User</b>
+            </div>
+            <div class="">
+              <span>Sex</span>
+              <b class="float-end">FEMALE</b>
+            </div>
+            <div class="">
+              <span>Date of Birth</span>
+              <b class="float-end">19/10/1998</b>
+            </div>
+            <div class="">
+              <span>Place of Issue</span>
+              <b class="float-end">Murugo</b>
+            </div>
+            <div class="">
+              <span>National ID No.</span>
+              <b class="float-end">289430590469569</b>
+            </div>
+            <div class="">
+              <span>Nationality</span>
+              <b class="float-end">Burundi</b>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+</div>
