@@ -56,7 +56,12 @@
         href="/applicant"
         class="nav-link {% if 'applicant' in request.path %} active {% else %} text-white {% endif %}"
       >
-        <i class="bi bi-stars me-2"></i> NID Card Applicant
+        <i class="bi bi-stars me-2"></i> Card Applicant
+      </a>
+    </li>
+    <li class="">
+      <a href="/lost-cards" class="nav-link text-white">
+        <i class="bi bi-stars me-2"></i> Lost Cards
       </a>
     </li>
     {% else %}
@@ -83,6 +88,7 @@
     <li class="{% if 'service' in request.path %} nav-item {% endif %}">
       <a
         href="/service"
+        target="_blank"
         class="nav-link {% if 'service' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-intersect me-2"></i> Services
@@ -91,6 +97,7 @@
     <li class="{% if 'publication' in request.path %} nav-item {% endif %}">
       <a
         href="/publication"
+        target="_blank"
         class="nav-link {% if 'publication' in request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-intersect me-2"></i> Publications
@@ -157,11 +164,7 @@
       aria-labelledby="dropdownUser1"
     >
       <li><a class="dropdown-item" href="/logout">Logout</a></li>
-      <li>
-        <hr />
-      </li>
-      <li><a class="dropdown-item" href="/dashboard">Settings</a></li>
-      <li><a class="dropdown-item" href="/dashboard">Profile</a></li>
+      <li><a class="dropdown-item" href="/profile">Profile</a></li>
     </ul>
   </div>
 </div>

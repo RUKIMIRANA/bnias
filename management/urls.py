@@ -17,6 +17,8 @@ urlpatterns = [
     path("publication/<int:pk>", views.PublicationDetail.as_view(), name="publication"),
     # application
     path("apply", views.apply, name="apply"),
+    path("deny", views.deny, name="deny"),
+    path("approve", views.approve, name="approve"),
     path("lost", views.lost, name="lost"),
     path("card", views.card, name="card"),
     path("citizen", views.citizen, name="citizen"),
@@ -24,6 +26,7 @@ urlpatterns = [
     path("province", views.province, name="province"),
     path("commune", views.commune, name="commune"),
     path("colline", views.colline, name="colline"),
+    path("lost-cards", views.lost_cards, name="lost-cards"),
     path("notification", views.notification, name="notification"),
     # dashboard
     path("dashboard", views.dashboard, name="dashboard"),

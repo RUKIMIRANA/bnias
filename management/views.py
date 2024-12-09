@@ -210,6 +210,18 @@ def lost(request):
 
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
+def approve(request):
+    pass
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def deny(request):
+    pass
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
 def citizen(request):
     rows = Citizen.objects.order_by("-id")
     paginator = Paginator(rows, 12)
@@ -283,3 +295,14 @@ def notification(request):
     page_object = paginator.get_page(page_number)
 
     return render(request, "dashboard/notification.html", {"page_object": page_object})
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def lost_cards(request):
+    rows = LostIdCardReport.objects.order_by("-id")
+    paginator = Paginator(rows, 12)
+    page_number = request.GET.get("page")
+    page_object = paginator.get_page(page_number)
+
+    return render(request, "dashboard/lost-cards.html", {"page_object": page_object})
