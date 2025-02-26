@@ -10,7 +10,7 @@ from .models import (
     LostIdCardReport,
     RegisteredIdCardApplication,
 )
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
@@ -49,7 +49,27 @@ class PublicationDetail(DetailView):
 @login_required(login_url="/login")
 @require_http_methods(["GET", "POST"])
 def dashboard(request):
-    return render(request, "dashboard/index.html")
+    citizen_count = Citizen.objects.count()
+    service_count = Service.objects.count()
+    lost_count = LostIdCardReport.objects.count()
+    applicant_count = RegisteredIdCardApplication.objects.count()
+    regions = (
+        RegisteredIdCardApplication.objects.values("province_id", "province__name")
+        .annotate(count=Count("province_id"))
+        .order_by("province_id")
+    )
+    print(regions)
+    return render(
+        request,
+        "dashboard/index.html",
+        {
+            "regions": regions,
+            "lost_count": lost_count,
+            "service_count": service_count,
+            "citizen_count": citizen_count,
+            "applicant_count": applicant_count,
+        },
+    )
 
 
 @require_http_methods(["GET", "POST"])
