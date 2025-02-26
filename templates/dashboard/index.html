@@ -32,11 +32,11 @@
       </a>
     </div>
   </div>
-  <div class="col-md-6 text-center my-4">
+  <div class="col-md-8 text-center my-4">
     <h4>Regional Card Application</h4>
     <canvas id="region-chart"></canvas>
   </div>
-  <div class="col-md-6 text-center my-4">
+  <div class="col-md-4 text-center my-4">
     <h4>Processed Cards</h4>
     <canvas id="process-chart"></canvas>
   </div>
@@ -78,7 +78,7 @@
   {% endfor %}
 
   new Chart(processChart, {
-    type: "pie",
+    type: "doughnut",
     options: { scales: { y: { beginAtZero: true } } },
     data: {
       labels: processLabels,
@@ -95,7 +95,7 @@
   });
 
   new Chart(regionChart, {
-    type: "doughnut",
+    type: "bar",
     options: { scales: { y: { beginAtZero: true } } },
     data: {
       labels: regionLabels,
