@@ -23,6 +23,7 @@ urlpatterns = [
     path("card", views.card, name="card"),
     path("citizen", views.citizen, name="citizen"),
     path("applicant", views.applicant, name="applicant"),
+    path("applicant/<int:id>", views.applicant_show, name="applicant.show"),
     path("province", views.province, name="province"),
     path("commune", views.commune, name="commune"),
     path("colline", views.colline, name="colline"),

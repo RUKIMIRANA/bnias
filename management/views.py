@@ -238,13 +238,15 @@ def lost(request):
 
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
-def approve(request):
+def approve(request, id):
+    applicant = get_object_or_404(RegisteredIdCardApplication, pk=id)
     pass
 
 
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
-def deny(request):
+def deny(request, id):
+    applicant = get_object_or_404(RegisteredIdCardApplication, pk=id)
     pass
 
 
@@ -345,8 +347,21 @@ def applicant(request):
 
     return render(
         request,
-        "dashboard/applicant.html",
+        "dashboard/applicant/index.html",
         {"page_object": page_object, "profile": profile},
+    )
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def applicant_show(request, id):
+    applicant = get_object_or_404(RegisteredIdCardApplication, pk=id)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
+
+    return render(
+        request,
+        "dashboard/applicant/show.html",
+        {"applicant": applicant, "profile": profile},
     )
 
 
