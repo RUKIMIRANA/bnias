@@ -127,6 +127,10 @@ def login(request):
             messages.info(request, "Invalid credentials")
             return redirect("login")
 
+        if not Profile.objects.filter(user=user).exists():
+            new_profile = Profile.objects.create(user=user, profile_user_id=user.id)
+            new_profile.save()
+
         login_me_in(request, user)
         return redirect("dashboard")
 
