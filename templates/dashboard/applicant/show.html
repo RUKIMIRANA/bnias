@@ -82,10 +82,16 @@ Applicant - FED {% endblock %} {% block content %}
           </tr>
         </tbody>
       </table>
+      {% if not applicant.is_approved %}
       <div>
-        <a href="" class="btn btn-info">Approve</a>
-        <a href="" class="btn btn-warning">Deny</a>
+        <a href="{% url 'approve' id=applicant.id %}" class="btn btn-info">
+          Approve
+        </a>
+        <a href="{% url 'deny' id=applicant.id %}" class="btn btn-warning">
+          Deny
+        </a>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>

@@ -17,8 +17,8 @@ urlpatterns = [
     path("publication/<int:pk>", views.PublicationDetail.as_view(), name="publication"),
     # application
     path("apply", views.apply, name="apply"),
-    path("deny", views.deny, name="deny"),
-    path("approve", views.approve, name="approve"),
+    path("deny/<int:id>", views.deny, name="deny"),
+    path("approve/<int:id>", views.approve, name="approve"),
     path("lost", views.lost, name="lost"),
     path("card", views.card, name="card"),
     path("citizen", views.citizen, name="citizen"),

@@ -50,8 +50,14 @@
           >
             View
           </a>
-          <a href="#" class="btn btn-sm btn-info"> Approve </a>
-          <a href="#" class="btn btn-sm btn-warning"> Deny </a>
+          {% if not row.is_approved %}
+          <a href="{% url 'approve' id=row.id %}" class="btn btn-sm btn-info">
+            Approve
+          </a>
+          <a href="{% url 'deny' id=row.id %}" class="btn btn-sm btn-warning">
+            Deny
+          </a>
+          {% endif %}
         </div>
       </td>
     </tr>

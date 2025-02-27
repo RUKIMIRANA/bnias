@@ -240,14 +240,30 @@ def lost(request):
 @login_required(login_url="/login")
 def approve(request, id):
     applicant = get_object_or_404(RegisteredIdCardApplication, pk=id)
-    pass
+    applicant.is_approved = True
+
+    if not Citizen.objects.filter(
+        first_name=applicant.first_name, last_name=applicant.last_name
+    ).exists():
+        citizen = Citizen(
+            first_name=applicant.first_name,
+            last_name=applicant.last_name,
+            phone=applicant.phone,
+            birth_date=applicant.birth_date,
+            user_id=request.user.id,
+        )
+        citizen.save()
+
+    applicant.save()
+    return redirect("citizen")
 
 
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
 def deny(request, id):
     applicant = get_object_or_404(RegisteredIdCardApplication, pk=id)
-    pass
+    applicant.delete()
+    return redirect("applicant")
 
 
 @require_http_methods(["GET"])
