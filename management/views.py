@@ -271,7 +271,8 @@ def deny(request, id):
 def my_card(request):
     # citizen = Citizen.objects.get(user=request.user)
     # card = citizen.card if citizen.card else "No card available"
-    return render(request, "dashboard/my-card.html")
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
+    return render(request, "dashboard/my-card.html", {"profile": profile})
 
 
 @require_http_methods(["GET"])

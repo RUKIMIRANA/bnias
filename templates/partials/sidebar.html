@@ -30,7 +30,6 @@
         <i class="bi bi-speedometer2 me-2"></i> Dashboard
       </a>
     </li>
-
     <li class="{% if 'notification' in request.path %} nav-item {% endif %}">
       <a
         href="/notification"
@@ -59,8 +58,11 @@
         <i class="bi bi-stars me-2"></i> Card Applicant
       </a>
     </li>
-    <li class="">
-      <a href="/lost-cards" class="nav-link text-white">
+    <li class="{% if 'lost-card' in request.path %} nav-item {% endif %}">
+      <a
+        href="/lost-cards"
+        class="nav-link {% if 'lost-card' in request.path %} active {% else %} text-white {% endif %}"
+      >
         <i class="bi bi-stars me-2"></i> Lost Cards
       </a>
     </li>
@@ -79,10 +81,10 @@
       </a>
     </li>
     {% endif %}
-    <li class="{% if 'lost' in request.path %} nav-item {% endif %}">
+    <li class="{% if '/lost' == request.path %} nav-item {% endif %}">
       <a
         href="/lost"
-        class="nav-link {% if 'lost' in request.path %} active {% else %} text-white {% endif %}"
+        class="nav-link {% if '/lost' == request.path %} active {% else %} text-white {% endif %}"
       >
         <i class="bi bi-stars me-2"></i> Report Lost Card
       </a>
