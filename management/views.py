@@ -1,5 +1,6 @@
 from .models import (
     Colline,
+    Profile,
     Commune,
     Citizen,
     Service,
@@ -14,10 +15,10 @@ from django.db.models import Q, Count
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as login_me_in, logout as log_me_out
 
 
@@ -53,16 +54,17 @@ def dashboard(request):
     service_count = Service.objects.count()
     lost_count = LostIdCardReport.objects.count()
     applicant_count = RegisteredIdCardApplication.objects.count()
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
     regions = (
         RegisteredIdCardApplication.objects.values("province_id", "province__name")
         .annotate(count=Count("province_id"))
         .order_by("province_id")
     )
-    print(regions)
     return render(
         request,
         "dashboard/index.html",
         {
+            "profile": profile,
             "regions": regions,
             "lost_count": lost_count,
             "service_count": service_count,
@@ -192,10 +194,16 @@ def lost(request):
         communes = Commune.objects.all()
         collines = Colline.objects.all()
         provinces = Province.objects.all()
+        profile = Profile.objects.filter(profile_user_id=request.user.id).first()
         return render(
             request,
             "dashboard/lost.html",
-            {"provinces": provinces, "collines": collines, "communes": communes},
+            {
+                "provinces": provinces,
+                "collines": collines,
+                "communes": communes,
+                "profile": profile,
+            },
         )
 
     if request.method == "POST":
@@ -255,8 +263,13 @@ def citizen(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/citizen.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/citizen.html",
+        {"page_object": page_object, "profile": profile},
+    )
 
 
 @require_http_methods(["GET"])
@@ -266,8 +279,13 @@ def colline(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/colline.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/colline.html",
+        {"page_object": page_object, "profile": profile},
+    )
 
 
 @require_http_methods(["GET"])
@@ -277,8 +295,11 @@ def card(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/card.html", {"page_object": page_object})
+    return render(
+        request, "dashboard/card.html", {"page_object": page_object, "profile": profile}
+    )
 
 
 @require_http_methods(["GET"])
@@ -288,8 +309,13 @@ def commune(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/commune.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/commune.html",
+        {"page_object": page_object, "profile": profile},
+    )
 
 
 @require_http_methods(["GET"])
@@ -299,8 +325,13 @@ def province(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/province.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/province.html",
+        {"page_object": page_object, "profile": profile},
+    )
 
 
 @require_http_methods(["GET"])
@@ -310,8 +341,13 @@ def applicant(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/applicant.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/applicant.html",
+        {"page_object": page_object, "profile": profile},
+    )
 
 
 @require_http_methods(["GET"])
@@ -321,8 +357,13 @@ def notification(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/notification.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/notification.html",
+        {"page_object": page_object, "profile": profile},
+    )
 
 
 @require_http_methods(["GET"])
@@ -332,5 +373,59 @@ def lost_cards(request):
     paginator = Paginator(rows, 12)
     page_number = request.GET.get("page")
     page_object = paginator.get_page(page_number)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
 
-    return render(request, "dashboard/lost-cards.html", {"page_object": page_object})
+    return render(
+        request,
+        "dashboard/lost-cards.html",
+        {"page_object": page_object, "profile": profile},
+    )
+
+
+@login_required(login_url="signin")  # type: ignore
+@require_http_methods(["GET", "POST"])
+def settings(request):
+    if request.method == "GET":
+        profile = Profile.objects.filter(profile_user_id=request.user.id).first()
+        return render(request, "settings.html", {"profile": profile})
+
+
+@require_http_methods(["GET"])
+def profile(request, id):
+    me = request.user.id
+    user = get_object_or_404(User, pk=id)
+
+    if not Profile.objects.filter(profile_user_id=id).exists():
+        profile = Profile.objects.create(user=user, profile_user_id=user.id)  # type: ignore
+        profile.save()
+    else:
+        profile = Profile.objects.filter(profile_user_id=id).get()
+
+    return render(request, "profile.html", {"profile": profile, "user": user, "me": me})
+
+
+@require_http_methods(["POST"])
+@login_required(login_url="signin")
+def profile_update(request, id):
+    user = get_object_or_404(User, pk=request.user.id)
+
+    if not Profile.objects.filter(profile_user_id=id).exists():
+        profile = Profile.objects.create(user=user, profile_user_id=user.id)  # type: ignore
+        profile.save()
+    else:
+        profile = Profile.objects.filter(profile_user_id=id).get()
+
+    user.last_name = request.POST["last_name"]
+    user.first_name = request.POST["first_name"]
+    user.username = request.POST["username"]
+    user.email = request.POST["email"]
+    profile.bio = request.POST["bio"]
+
+    if request.FILES.get("image") != None:
+        profile.image = request.FILES.get("image")
+
+    user.save()
+    profile.save()
+    messages.info(request, "Settings updated")
+
+    return redirect(request.META.get("HTTP_REFERER"))

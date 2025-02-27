@@ -169,7 +169,12 @@
       aria-labelledby="dropdownUser1"
     >
       <li><a class="dropdown-item" href="/logout">Logout</a></li>
-      <li><a class="dropdown-item" href="/profile">Profile</a></li>
+      <li><a class="dropdown-item" href="/settings">Settings</a></li>
+      <li>
+        <a class="dropdown-item" href="{% url 'profile' id=user.id %}">
+          Profile
+        </a>
+      </li>
     </ul>
   </div>
 </div>

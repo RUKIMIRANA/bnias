@@ -1,0 +1,92 @@
+{% extends 'layouts/dashboard.html' %} {% load static %} {% block title %} Settings
+- FED {% endblock %} {% block content %}
+<h4>Settings</h4>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Settings</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-12">
+    {% include 'partials/messages.html' %}
+    <form
+      action="{% url 'profile.update' id=user.id %}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="row">
+        <div class="col-md-4 mb-2">
+          <label for="first_name" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="first_name"
+            value="{{ user.first_name }}"
+            required
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label for="last_name" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="last_name"
+            value="{{ user.last_name }}"
+            required
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            value="{{ user.username }}"
+            required
+          />
+        </div>
+        <div class="col-md-6 mb-2">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            value="{{ user.email }}"
+            required
+          />
+        </div>
+        <div class="col-md-6 mb-2">
+          <label for="image" class="form-label">Image</label>
+          <input
+            type="file"
+            class="form-control"
+            name="image"
+            accept="image/*"
+          />
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="content" class="form-label">Bio</label>
+        <textarea
+          id="editor"
+          class="form-control"
+          name="bio"
+          rows="3"
+          placeholder="who are you, what do you do..."
+        >{{ profile.bio|safe }}</textarea>
+      </div>
+      {% csrf_token %}
+      <button class="btn btn-primary" type="submit">Continue</button>
+    </form>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="{% static 'js/ckeditor.js' %}"></script>
+<script>
+  ClassicEditor.create(document.querySelector("#editor"));
+</script>
+{% endblock %}

@@ -31,4 +31,7 @@ urlpatterns = [
     path("notification", views.notification, name="notification"),
     # dashboard
     path("dashboard", views.dashboard, name="dashboard"),
+    path("settings", views.settings, name="settings"),
+    path("profile/<int:id>", views.profile, name="profile"),
+    path("profile/<int:id>/update", views.profile_update, name="profile.update"),
 ]

@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import (
     Citizen,
     Colline,
+    Profile,
     Commune,
     LostIdCardReport,
     Province,
@@ -13,6 +14,7 @@ from .models import (
 )
 
 # Register your models here.
+admin.site.register(Profile)
 admin.site.register(Citizen)
 admin.site.register(Colline)
 admin.site.register(Commune)
