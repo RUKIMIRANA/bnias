@@ -38,7 +38,12 @@
       <td>{{row.birth_date|date:"M d, Y"}}</td>
       <td>
         <div class="btn-group">
-          <a href="#" class="btn btn-sm btn-success"> View </a>
+          <a
+            href="{% url 'card.show' id=row.id %}"
+            class="btn btn-sm btn-success"
+          >
+            View
+          </a>
         </div>
       </td>
     </tr>

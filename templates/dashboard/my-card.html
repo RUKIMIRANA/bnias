@@ -33,15 +33,17 @@
           <div class="d-flex flex-column w-100 gap-3">
             <div class="">
               <span>Names</span>
-              <b class="float-end">Mr User</b>
+              <b class="float-end">
+                {{ citizen.first_name }} {{ citizen.last_name }}
+              </b>
             </div>
             <div class="">
               <span>Sex</span>
-              <b class="float-end">FEMALE</b>
+              <b class="float-end">{{ citizen.gender }}</b>
             </div>
             <div class="">
               <span>Date of Birth</span>
-              <b class="float-end">19/10/1998</b>
+              <b class="float-end">{{ citizen.birth_date }}</b>
             </div>
             <div class="">
               <span>Place of Issue</span>
@@ -49,7 +51,7 @@
             </div>
             <div class="">
               <span>National ID No.</span>
-              <b class="float-end">289430590469569</b>
+              <b class="float-end"></b>
             </div>
             <div class="">
               <span>Nationality</span>

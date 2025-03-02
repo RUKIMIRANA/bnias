@@ -253,6 +253,7 @@ def approve(request, id):
             first_name=applicant.first_name,
             last_name=applicant.last_name,
             phone=applicant.phone,
+            gender=applicant.gender,
             birth_date=applicant.birth_date,
             user_id=request.user.id,
         )
@@ -273,10 +274,21 @@ def deny(request, id):
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
 def my_card(request):
-    # citizen = Citizen.objects.get(user=request.user)
-    # card = citizen.card if citizen.card else "No card available"
+    citizen = Citizen.objects.filter(user=request.user).first()
     profile = Profile.objects.filter(profile_user_id=request.user.id).first()
-    return render(request, "dashboard/my-card.html", {"profile": profile})
+    return render(
+        request, "dashboard/my-card.html", {"profile": profile, "citizen": citizen}
+    )
+
+
+@require_http_methods(["GET"])
+@login_required(login_url="/login")
+def card_show(request, id):
+    citizen = get_object_or_404(Citizen, pk=id)
+    profile = Profile.objects.filter(profile_user_id=request.user.id).first()
+    return render(
+        request, "dashboard/my-card.html", {"citizen": citizen, "profile": profile}
+    )
 
 
 @require_http_methods(["GET"])
@@ -457,7 +469,7 @@ def profile_update(request, id):
     user.email = request.POST["email"]
     profile.bio = request.POST["bio"]
 
-    if request.FILES.get("image") != None:
+    if request.FILES.get("image") is not None:
         profile.image = request.FILES.get("image")
 
     user.save()
