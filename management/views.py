@@ -165,7 +165,7 @@ def apply(request):
         colline = request.POST["colline"]
 
         if RegisteredIdCardApplication.objects.filter(
-            Q(email=email) | Q(phone=phone)
+            email=email, phone=phone
         ).exists():
             messages.info(request, "Application already sent")
 
