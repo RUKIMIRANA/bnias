@@ -277,21 +277,21 @@ def deny(request, id):
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
 def my_card(request):
-    citizen = Citizen.objects.filter(user=request.user).first()
+    applicant = RegisteredIdCardApplication.objects.filter(
+        email=request.user.email
+    ).first()
+    card = RegisteredIdCard.objects.filter(applicant=applicant).first()
     profile = Profile.objects.filter(profile_user_id=request.user.id).first()
-    return render(
-        request, "dashboard/my-card.html", {"profile": profile, "citizen": citizen}
-    )
+    return render(request, "dashboard/my-card.html", {"profile": profile, "card": card})
 
 
 @require_http_methods(["GET"])
 @login_required(login_url="/login")
 def card_show(request, id):
     citizen = get_object_or_404(Citizen, pk=id)
+    card = RegisteredIdCard.objects.filter(citizen=citizen).first()
     profile = Profile.objects.filter(profile_user_id=request.user.id).first()
-    return render(
-        request, "dashboard/my-card.html", {"citizen": citizen, "profile": profile}
-    )
+    return render(request, "dashboard/my-card.html", {"card": card, "profile": profile})
 
 
 @require_http_methods(["GET"])

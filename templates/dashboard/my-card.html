@@ -1,6 +1,6 @@
 {% extends 'layouts/dashboard.html' %} {% load static %} {% block content %}
 <div class="row my-1 g-4 justify-content-evenly align-items-center">
-  <div class="col-md-6">
+  <div class="col-md-7">
     {% include 'partials/messages.html' %}
     <div class="card border-secondary shadow">
       <div class="card-body">
@@ -23,35 +23,45 @@
           />
         </div>
         <div class="d-flex m-3">
+          {% if card.applicant.picture %}
           <img
+            src="/media/{{card.applicant.picture}}"
             class="me-4"
-            alt="user"
-            src="{% static 'img/phone-call.jpg' %}"
             height="240"
             width="200"
+            alt="user"
           />
+          {% else %}
+          <img
+            src="http://placehold.co/200x250"
+            class="me-4"
+            height="240"
+            width="200"
+            alt="user"
+          />
+          {% endif %}
           <div class="d-flex flex-column w-100 gap-3">
             <div class="">
               <span>Names</span>
               <b class="float-end">
-                {{ citizen.first_name }} {{ citizen.last_name }}
+                {{ card.citizen.first_name }} {{ card.citizen.last_name }}
               </b>
             </div>
             <div class="">
               <span>Sex</span>
-              <b class="float-end">{{ citizen.gender }}</b>
+              <b class="float-end">{{ card.citizen.gender }}</b>
             </div>
             <div class="">
               <span>Date of Birth</span>
-              <b class="float-end">{{ citizen.birth_date }}</b>
+              <b class="float-end">{{ card.citizen.birth_date }}</b>
             </div>
             <div class="">
               <span>Place of Issue</span>
-              <b class="float-end">Murugo</b>
+              <b class="float-end">{{ card.applicant.colline }}</b>
             </div>
             <div class="">
               <span>National ID No.</span>
-              <b class="float-end"></b>
+              <b class="float-end">{{ card.card_id }}</b>
             </div>
             <div class="">
               <span>Nationality</span>

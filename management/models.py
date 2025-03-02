@@ -56,7 +56,7 @@ class Commune(models.Model):
     chief = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.province.name} -> {self.name}"
+        return f"{self.province.name} / {self.name}"
 
 
 class Colline(models.Model):
@@ -65,7 +65,7 @@ class Colline(models.Model):
     chief = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.commune.province.name} -> {self.commune.name} -> {self.name}"
+        return f"{self.commune.province.name} / {self.commune.name} / {self.name}"
 
 
 class LostIdCardReport(models.Model):
