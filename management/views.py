@@ -259,6 +259,9 @@ def approve(request, id):
         )
         citizen.save()
 
+        card = RegisteredIdCard(citizen=citizen, applicant=applicant)
+        card.save()
+
     applicant.save()
     return redirect("citizen")
 
