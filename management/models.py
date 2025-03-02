@@ -109,6 +109,9 @@ class RegisteredIdCard(models.Model):
         RegisteredIdCardApplication, on_delete=models.CASCADE, null=True
     )
 
+    def __str__(self):
+        return f"{self.card_id}"
+
 
 class Service(models.Model):
     name = models.CharField(max_length=20)

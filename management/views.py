@@ -262,6 +262,12 @@ def approve(request, id):
         card = RegisteredIdCard(citizen=citizen, applicant=applicant)
         card.save()
 
+        applying_user = User.objects.filter(email=applicant.email).first()
+        if applying_user is not None:
+            reason = f"Application REJECTED - {request.GET.get('reason')}"
+            notification = Notification(message=reason, user=applying_user)
+            notification.save()
+
     applicant.save()
     return redirect("citizen")
 

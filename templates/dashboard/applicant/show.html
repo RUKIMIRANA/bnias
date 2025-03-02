@@ -87,11 +87,48 @@ Applicant - FED {% endblock %} {% block content %}
         <a href="{% url 'approve' id=applicant.id %}" class="btn btn-info">
           Approve
         </a>
-        <a href="{% url 'deny' id=applicant.id %}" class="btn btn-warning">
+        <button
+          class="btn btn-warning"
+          data-bs-toggle="modal"
+          data-bs-target="#denyModal"
+        >
           Deny
-        </a>
+        </button>
       </div>
       {% endif %}
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="denyModal"
+  tabindex="-1"
+  aria-labelledby="denyModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="denyModalLabel">Reason</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'deny' id=applicant.id %}">
+          <textarea
+            required
+            rows="3"
+            name="reason"
+            class="form-control mb-3"
+            placeholder="Write a reason for rejecting the application"
+          ></textarea>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
